@@ -17,7 +17,7 @@ const BoardColumn = ({ column, tasks, index }) => {
           {...providedOuter.draggableProps}
         >
           <h2 className={styles.title} {...providedOuter.dragHandleProps}>
-            {column.title}
+            {column.title} - {tasks.length}
           </h2>
           <Droppable droppableId={column.id} type="task">
             {(providedInner) => (

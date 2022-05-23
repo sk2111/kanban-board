@@ -15,8 +15,20 @@ const BoardView = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [boardInfo, setBoardInfo] = useState(mockBoardInfo);
 
-  const onDragEnd = (result, state, setState) => {
-    const { destination, source } = result;
+  const handleColumnSwap = (source, destination, draggableId) => {
+    const newColumnOrder = Array.from(boardInfo.columnOrder);
+    newColumnOrder.splice(source.index, 1);
+    newColumnOrder.splice(destination.index, 0, draggableId);
+
+    setBoardInfo((prevState) => ({
+      ...prevState,
+      columnOrder: newColumnOrder,
+    }));
+  };
+
+  const onDragEnd = (result) => {
+    const { destination, source, draggableId, type } = result;
+
     if (
       !destination ||
       (destination.droppableId === source.droppableId &&
@@ -25,9 +37,9 @@ const BoardView = () => {
       return;
     }
 
-    const [swappedItem] = state.splice(source.index, 1);
-    state.splice(destination.index, 0, swappedItem);
-    setState(state);
+    if (type === "column") {
+      handleColumnSwap(source, destination, draggableId);
+    }
   };
 
   return (
