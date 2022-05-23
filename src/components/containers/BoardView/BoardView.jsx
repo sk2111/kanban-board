@@ -39,7 +39,7 @@ const BoardView = () => {
   return (
     <section className={styles.container}>
       <SearchBar
-        placeholder="Search for user name"
+        placeholder="Search by user name"
         debounceTimeInMs={400}
         value={searchTerm}
         handleChange={(value) => setSearchTerm(value)}
