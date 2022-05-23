@@ -26,6 +26,31 @@ const BoardView = () => {
     }));
   };
 
+  const handleColumnTaskSwap = (
+    start,
+    finish,
+    source,
+    destination,
+    draggableId,
+  ) => {
+    const newUserIds = Array.from(start.userIds);
+    newUserIds.splice(source.index, 1);
+    newUserIds.splice(destination.index, 0, draggableId);
+
+    const newColumn = {
+      ...finish,
+      userIds: newUserIds,
+    };
+
+    setBoardInfo((prevState) => ({
+      ...prevState,
+      columns: {
+        ...prevState.columns,
+        [newColumn.id]: newColumn,
+      },
+    }));
+  };
+
   const onDragEnd = (result) => {
     const { destination, source, draggableId, type } = result;
 
@@ -37,8 +62,15 @@ const BoardView = () => {
       return;
     }
 
+    const start = boardInfo.columns[source.droppableId];
+    const finish = boardInfo.columns[destination.droppableId];
+
     if (type === "column") {
       handleColumnSwap(source, destination, draggableId);
+    } else if (start === finish) {
+      handleColumnTaskSwap(start, finish, source, destination, draggableId);
+    } else {
+      // Moving from one list to another
     }
   };
 
