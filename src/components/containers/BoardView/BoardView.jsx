@@ -51,6 +51,36 @@ const BoardView = () => {
     }));
   };
 
+  const handleColumnToColumnSwap = (
+    start,
+    finish,
+    source,
+    destination,
+    draggableId,
+  ) => {
+    const startUsersIds = Array.from(start.userIds);
+    startUsersIds.splice(source.index, 1);
+    const newStart = {
+      ...start,
+      userIds: startUsersIds,
+    };
+    const finishUserIds = Array.from(finish.userIds);
+    finishUserIds.splice(destination.index, 0, draggableId);
+    const newFinish = {
+      ...finish,
+      userIds: finishUserIds,
+    };
+
+    setBoardInfo((prevState) => ({
+      ...prevState,
+      columns: {
+        ...prevState.columns,
+        [newStart.id]: newStart,
+        [newFinish.id]: newFinish,
+      },
+    }));
+  };
+
   const onDragEnd = (result) => {
     const { destination, source, draggableId, type } = result;
 
@@ -68,9 +98,11 @@ const BoardView = () => {
     if (type === "column") {
       handleColumnSwap(source, destination, draggableId);
     } else if (start === finish) {
+      //same column task swap
       handleColumnTaskSwap(start, finish, source, destination, draggableId);
     } else {
       // Moving from one list to another
+      handleColumnToColumnSwap(start, finish, source, destination, draggableId);
     }
   };
 
