@@ -3,23 +3,17 @@ import React, { useState } from "react";
 //css
 import styles from "./BoardView.module.css";
 //components
-import { DragDropContext } from "react-beautiful-dnd";
+import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import SearchBar from "components/reusables/SearchBar/SearchBar";
 import BoardColumn from "components/reusables/BoardColumn/BoardColumn";
 //mock data
-import { userInfo } from "./mock";
+import { mockBoardInfo } from "./mock";
 //helpers
 import { getFilteredList } from "utils/helpers";
 
 const BoardView = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [open, setOpen] = useState(userInfo.open.list);
-  const [inProgress, setInProgress] = useState(userInfo.inProgress.list);
-  const [completed, setCompleted] = useState(userInfo.completed.list);
-
-  const filterOpen = getFilteredList(searchTerm, open);
-  const filterInProgress = getFilteredList(searchTerm, inProgress);
-  const filterCompleted = getFilteredList(searchTerm, completed);
+  const [boardInfo, setBoardInfo] = useState(mockBoardInfo);
 
   const onDragEnd = (result, state, setState) => {
     const { destination, source } = result;
@@ -45,32 +39,36 @@ const BoardView = () => {
         handleChange={(value) => setSearchTerm(value)}
       />
       <div className={styles.mainZone}>
-        <DragDropContext
-          onDragEnd={(result) => onDragEnd(result, open, setOpen)}
-        >
-          <BoardColumn
-            title={userInfo.open.title}
-            columnId={userInfo.open.title}
-            tasks={filterOpen}
-          />
-        </DragDropContext>
-        <DragDropContext
-          onDragEnd={(result) => onDragEnd(result, inProgress, setInProgress)}
-        >
-          <BoardColumn
-            title={userInfo.inProgress.title}
-            columnId={userInfo.inProgress.title}
-            tasks={filterInProgress}
-          />
-        </DragDropContext>
-        <DragDropContext
-          onDragEnd={(result) => onDragEnd(result, completed, setCompleted)}
-        >
-          <BoardColumn
-            title={userInfo.completed.title}
-            columnId={userInfo.completed.title}
-            tasks={filterCompleted}
-          />
+        <DragDropContext onDragEnd={onDragEnd}>
+          <Droppable
+            droppableId="all-columns"
+            direction="horizontal"
+            type="column"
+          >
+            {(provided) => (
+              <div
+                className={styles.zoneContainer}
+                ref={provided.innerRef}
+                {...provided.droppableProps}
+              >
+                {boardInfo.columnOrder.map((columnId, index) => {
+                  const column = boardInfo.columns[columnId];
+                  const users = column.userIds.map(
+                    (userId) => boardInfo.users[userId],
+                  );
+                  return (
+                    <BoardColumn
+                      key={column.id}
+                      column={column}
+                      tasks={users}
+                      index={index}
+                    />
+                  );
+                })}
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
         </DragDropContext>
       </div>
     </section>

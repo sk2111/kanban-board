@@ -7,6 +7,9 @@
   justify-content: space-between;
   margin: 2rem 0;
 }
-.mainZone > div {
+.zoneContainer {
+  display: flex;
+}
+.zoneContainer > div {
   width: 30%;
 }
