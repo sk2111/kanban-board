@@ -6,9 +6,29 @@ import styles from "./BoardView.module.css";
 import { DragDropContext } from "react-beautiful-dnd";
 import SearchBar from "components/reusables/SearchBar/SearchBar";
 import BoardColumn from "components/reusables/BoardColumn/BoardColumn";
+//mock data
+import { userInfo } from "./mock";
 
 const BoardView = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [open, setOpen] = useState(userInfo.open.list);
+  const [inProgress, setInProgress] = useState(userInfo.inProgress.list);
+  const [completed, setCompleted] = useState(userInfo.completed.list);
+
+  const onDragEnd = (result, state, setState) => {
+    const { destination, source } = result;
+    if (
+      !destination ||
+      (destination.droppableId === source.droppableId &&
+        destination.index === source.index)
+    ) {
+      return;
+    }
+
+    const [swappedItem] = state.splice(source.index, 1);
+    state.splice(destination.index, 0, swappedItem);
+    setState(state);
+  };
 
   return (
     <section className={styles.container}>
@@ -19,28 +39,31 @@ const BoardView = () => {
         handleChange={(value) => setSearchTerm(value)}
       />
       <div className={styles.mainZone}>
-        <DragDropContext>
+        <DragDropContext
+          onDragEnd={(result) => onDragEnd(result, open, setOpen)}
+        >
           <BoardColumn
-            title="open"
-            columnId="open"
-            tasks={[
-              {
-                id: "1",
-                name: "Amirdharshan A",
-                company: "Intellecytx Data Science",
-              },
-              {
-                id: "2",
-                name: "Vimal Kumar",
-                company: "Sirius Computer Solutions",
-              },
-              {
-                id: "3",
-                name: "Jayakrishnanan",
-                company: "Lakeba IT Solutions",
-              },
-              { id: "4", name: "Affan Ahmed", company: "Smart Parking" },
-            ]}
+            title={userInfo.open.title}
+            columnId={userInfo.open.title}
+            tasks={open}
+          />
+        </DragDropContext>
+        <DragDropContext
+          onDragEnd={(result) => onDragEnd(result, inProgress, setInProgress)}
+        >
+          <BoardColumn
+            title={userInfo.inProgress.title}
+            columnId={userInfo.inProgress.title}
+            tasks={inProgress}
+          />
+        </DragDropContext>
+        <DragDropContext
+          onDragEnd={(result) => onDragEnd(result, completed, setCompleted)}
+        >
+          <BoardColumn
+            title={userInfo.completed.title}
+            columnId={userInfo.completed.title}
+            tasks={completed}
           />
         </DragDropContext>
       </div>

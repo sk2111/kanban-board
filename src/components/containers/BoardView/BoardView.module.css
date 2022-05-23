@@ -3,5 +3,10 @@
 }
 .mainZone {
   background-color: var(--app-bg-primary);
+  display: flex;
+  justify-content: space-between;
   margin: 2rem 0;
+}
+.mainZone > div {
+  width: 30%;
 }
