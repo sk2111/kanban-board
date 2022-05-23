@@ -1,5 +1,4 @@
 .container {
-  border: 1px solid var(--border-color-primary);
   border-radius: 0.5rem;
   padding: 1rem;
 }

@@ -8,12 +8,18 @@ import SearchBar from "components/reusables/SearchBar/SearchBar";
 import BoardColumn from "components/reusables/BoardColumn/BoardColumn";
 //mock data
 import { userInfo } from "./mock";
+//helpers
+import { getFilteredList } from "utils/helpers";
 
 const BoardView = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [open, setOpen] = useState(userInfo.open.list);
   const [inProgress, setInProgress] = useState(userInfo.inProgress.list);
   const [completed, setCompleted] = useState(userInfo.completed.list);
+
+  const filterOpen = getFilteredList(searchTerm, open);
+  const filterInProgress = getFilteredList(searchTerm, inProgress);
+  const filterCompleted = getFilteredList(searchTerm, completed);
 
   const onDragEnd = (result, state, setState) => {
     const { destination, source } = result;
@@ -45,7 +51,7 @@ const BoardView = () => {
           <BoardColumn
             title={userInfo.open.title}
             columnId={userInfo.open.title}
-            tasks={open}
+            tasks={filterOpen}
           />
         </DragDropContext>
         <DragDropContext
@@ -54,7 +60,7 @@ const BoardView = () => {
           <BoardColumn
             title={userInfo.inProgress.title}
             columnId={userInfo.inProgress.title}
-            tasks={inProgress}
+            tasks={filterInProgress}
           />
         </DragDropContext>
         <DragDropContext
@@ -63,7 +69,7 @@ const BoardView = () => {
           <BoardColumn
             title={userInfo.completed.title}
             columnId={userInfo.completed.title}
-            tasks={completed}
+            tasks={filterCompleted}
           />
         </DragDropContext>
       </div>
