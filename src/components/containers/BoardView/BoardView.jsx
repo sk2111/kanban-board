@@ -3,7 +3,9 @@ import React, { useState } from "react";
 //css
 import styles from "./BoardView.module.css";
 //components
+import { DragDropContext } from "react-beautiful-dnd";
 import SearchBar from "components/reusables/SearchBar/SearchBar";
+import BoardColumn from "components/reusables/BoardColumn/BoardColumn";
 
 const BoardView = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -16,7 +18,20 @@ const BoardView = () => {
         value={searchTerm}
         handleChange={(value) => setSearchTerm(value)}
       />
-      <div className={styles.mainZone}>I am main zone</div>
+      <div className={styles.mainZone}>
+        <DragDropContext>
+          <BoardColumn
+            title="open"
+            columnId="open"
+            tasks={[
+              { id: "task-1", content: "Take out the garbage" },
+              { id: "task-2", content: "Watch my favorite show" },
+              { id: "task-3", content: "Charge my phone" },
+              { id: "task-4", content: "Cook dinner" },
+            ]}
+          />
+        </DragDropContext>
+      </div>
     </section>
   );
 };
