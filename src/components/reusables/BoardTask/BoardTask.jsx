@@ -23,6 +23,9 @@ const BoardTask = ({ task, index }) => {
   );
 };
 
-BoardTask.propTypes = {};
+BoardTask.propTypes = {
+  task: PropTypes.object.isRequired,
+  index: PropTypes.number.isRequired,
+};
 
 export default BoardTask;

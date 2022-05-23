@@ -29,6 +29,10 @@ const BoardColumn = ({ title, columnId, tasks }) => {
   );
 };
 
-BoardColumn.propTypes = {};
+BoardColumn.propTypes = {
+  title: PropTypes.string.isRequired,
+  columnId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  tasks: PropTypes.array.isRequired,
+};
 
 export default BoardColumn;
