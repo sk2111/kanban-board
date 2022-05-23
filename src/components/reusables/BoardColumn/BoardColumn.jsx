@@ -10,26 +10,26 @@ import BoardTask from "components/reusables/BoardTask/BoardTask";
 const BoardColumn = ({ column, tasks, index }) => {
   return (
     <Draggable draggableId={column.id} index={index}>
-      {(provided) => (
+      {(providedOuter) => (
         <div
           className={styles.container}
-          ref={provided.innerRef}
-          {...provided.draggableProps}
+          ref={providedOuter.innerRef}
+          {...providedOuter.draggableProps}
         >
-          <h2 className={styles.title} {...provided.dragHandleProps}>
+          <h2 className={styles.title} {...providedOuter.dragHandleProps}>
             {column.title}
           </h2>
           <Droppable droppableId={column.id} type="task">
-            {(provided) => (
+            {(providedInner) => (
               <div
                 className={styles.taskList}
-                ref={provided.innerRef}
-                {...provided.droppableProps}
+                ref={providedInner.innerRef}
+                {...providedInner.droppableProps}
               >
                 {tasks.map((task, index) => (
                   <BoardTask key={task.id} task={task} index={index} />
                 ))}
-                {provided.placeholder}
+                {providedInner.placeholder}
               </div>
             )}
           </Droppable>

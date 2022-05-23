@@ -3,12 +3,11 @@
 }
 .mainZone {
   background-color: var(--app-bg-primary);
-  display: flex;
-  justify-content: space-between;
   margin: 2rem 0;
 }
 .zoneContainer {
   display: flex;
+  justify-content: space-between;
 }
 .zoneContainer > div {
   width: 30%;
