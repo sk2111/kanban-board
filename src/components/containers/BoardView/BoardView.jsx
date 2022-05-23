@@ -24,10 +24,22 @@ const BoardView = () => {
             title="open"
             columnId="open"
             tasks={[
-              { id: "task-1", content: "Take out the garbage" },
-              { id: "task-2", content: "Watch my favorite show" },
-              { id: "task-3", content: "Charge my phone" },
-              { id: "task-4", content: "Cook dinner" },
+              {
+                id: "1",
+                name: "Amirdharshan A",
+                company: "Intellecytx Data Science",
+              },
+              {
+                id: "2",
+                name: "Vimal Kumar",
+                company: "Sirius Computer Solutions",
+              },
+              {
+                id: "3",
+                name: "Jayakrishnanan",
+                company: "Lakeba IT Solutions",
+              },
+              { id: "4", name: "Affan Ahmed", company: "Smart Parking" },
             ]}
           />
         </DragDropContext>

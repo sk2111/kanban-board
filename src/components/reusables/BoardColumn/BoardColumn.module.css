@@ -1,7 +1,18 @@
 .container {
   border: 1px solid var(--border-color-primary);
   border-radius: 0.5rem;
+  padding: 1rem;
+}
+.title {
+  background-color: var(--app-bg-secondary);
+  border: 1px solid var(--border-color-primary);
+  border-left: 4px solid var(--text-color-secondary);
+  border-radius: 0.2rem;
+  font-size: 1.6rem;
+  margin-bottom: 2rem;
+  padding: 1.2rem 1.8rem;
+  text-transform: capitalize;
 }
 .taskList {
-  padding: 1rem;
+  margin-top: 1rem;
 }

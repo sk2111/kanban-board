@@ -16,7 +16,8 @@ const BoardTask = ({ task, index }) => {
           {...provided.draggableProps}
           {...provided.dragHandleProps}
         >
-          {task.content}
+          <p className={styles.taskName}>{task.name}</p>
+          <p className={styles.company}>{task.company}</p>
         </div>
       )}
     </Draggable>

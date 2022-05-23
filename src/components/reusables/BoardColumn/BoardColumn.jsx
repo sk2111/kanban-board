@@ -10,7 +10,9 @@ import BoardTask from "components/reusables/BoardTask/BoardTask";
 const BoardColumn = ({ title, columnId, tasks }) => {
   return (
     <div className={styles.container}>
-      <h3 className={styles.title}>{title}</h3>
+      <h3 className={styles.title}>
+        {title} - {tasks.length}
+      </h3>
       <Droppable droppableId={columnId}>
         {(provided) => (
           <div

@@ -2,5 +2,6 @@
   margin: 1rem 0;
 }
 .mainZone {
+  background-color: var(--app-bg-primary);
   margin: 2rem 0;
 }
