@@ -1,8 +1,10 @@
-export const getFilteredList = (searchTerm, list) => {
-  if (searchTerm.trim()) {
-    return list.filter(({ name }) => {
-      return name.toLowerCase().includes(searchTerm.trim().toLowerCase());
-    });
+export const getFilteredList = (column, boardInfo, searchTerm) => {
+  const searchVal = searchTerm.trim().toLowerCase();
+  if (searchVal) {
+    const filterIds = column.userIds.filter((userId) =>
+      boardInfo.users[userId].name.toLowerCase().includes(searchVal),
+    );
+    return filterIds.map((id) => boardInfo.users[id]);
   }
-  return list;
+  return column.userIds.map((id) => boardInfo.users[id]);
 };

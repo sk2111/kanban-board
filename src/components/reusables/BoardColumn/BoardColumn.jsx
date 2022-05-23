@@ -26,8 +26,8 @@ const BoardColumn = ({ column, tasks, index }) => {
                 ref={providedInner.innerRef}
                 {...providedInner.droppableProps}
               >
-                {tasks.map((task, index) => (
-                  <BoardTask key={task.id} task={task} index={index} />
+                {tasks.map((task, idx) => (
+                  <BoardTask key={task.id} task={task} index={idx} />
                 ))}
                 {providedInner.placeholder}
               </div>

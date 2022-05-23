@@ -53,14 +53,17 @@ const BoardView = () => {
               >
                 {boardInfo.columnOrder.map((columnId, index) => {
                   const column = boardInfo.columns[columnId];
-                  const users = column.userIds.map(
-                    (userId) => boardInfo.users[userId],
+                  const filteredUsers = getFilteredList(
+                    column,
+                    boardInfo,
+                    searchTerm,
                   );
+
                   return (
                     <BoardColumn
                       key={column.id}
                       column={column}
-                      tasks={users}
+                      tasks={filteredUsers}
                       index={index}
                     />
                   );
